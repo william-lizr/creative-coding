@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <canvas width="1200px" height="800px"></canvas>
+    </div>
+
+    <script>
+
+        let canvas = document.querySelector('canvas');
+        let context = canvas.getContext('2d');
+
+        width = canvas.width;
+        height = canvas.height;
+
+        console.log(width);
+        console.log(height);
+
+        let x = 100;
+        let y = 400;
+
+        let sizex = 100;
+        let sizey = 150;
+
+        let speedx = 5;
+        let speedy = 5;
+
+        let circle = false;
+
+        let radius = 20;
+
+        if (circle) {
+            sizex = radius;
+            sizey = radius;
+        }
+
+        function recompute() {
+
+            context.fillStyle = "#FFFFFF";
+            context.beginPath();
+            context.fillRect(0, 0, width, height);
+
+            console.log('iteration');
+
+            if (circle) {
+                context.lineWidth = 1;
+                context.beginPath();
+                context.arc(x, y, radius, 0, 2 * Math.PI);
+                context.stroke();
+
+                console.log('circled');
+
+
+                if (x + radius > width || x - radius < 0) {
+                    speedx = -speedx;
+                    console.log('x hit');
+                }
+
+                if (y + radius > height || y - radius < 0) {
+                    speedy = -speedy;
+                    console.log('y hit');
+                }
+
+            } else {
+
+                context.beginPath();
+                context.rect(x, y, sizex, sizey);
+                context.stroke();
+
+                console.log('squared');
+
+
+                if (x + sizex > width || x < 0) {
+                    speedx = -speedx;
+                    console.log('x hit');
+                }
+
+                if (y + sizey > height || y < 0) {
+                    speedy = -speedy;
+                    console.log('y hit');
+                }
+
+            }
+
+            console.log(x, y, speedx, speedy);
+
+            x = x + speedx;
+            y = y + speedy;
+
+        }
+
+        function delay(milliseconds) {
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds);
+            });
+        }
+
+        async function init() {
+            let f = 0;
+            let maximum = 2000;
+            let delaytime = 5;
+
+            while (f < maximum) {
+                await delay(delaytime);
+                recompute();
+                f++;
+            }
+
+            let runtime = delaytime * maximum;
+
+            console.log('maximum of ' + maximum + ' loops reached (' + f + ')' );
+            console.log('program ran for ' + runtime + ' milliseconds')
+        }
+
+        init()
+
+        console.log('init is off');
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>
