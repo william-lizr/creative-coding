@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Canvas</title>
+</head>
+<body>
+    
+<canvas width="600" height="600"></canvas>
+
+<div class="data">
+<h4>items selected:</h4>
+<h2 id="count">hmm</h2>
+
+<h4>ratio:</h4>
+<h1 id="probability">mmh</h1>
+</div>
+
+
+<script>    
+
+function recompute(){
+
+let canvas = document.querySelector('canvas');
+let context = canvas.getContext('2d');
+
+let width = 60;
+let height = 60;
+let gap = 20;
+
+let randomthick = 5;
+let thisrandom = 0.5;
+
+let randomcounter = 0;
+let probability = 0;
+let selectchance = 0.5;
+
+for(j = 0; j < 5; j++){
+    for(i = 0; i < 5; i++){
+
+        thisrandom = Math.random();
+
+if (thisrandom >= selectchance) {    
+context.lineWidth = 10*thisrandom;
+randomcounter++;
+context.strokeStyle = "#FF0000";
+
+} else {  
+context.lineWidth = 5;
+context.strokeStyle = "#000000";
+}
+
+context.beginPath();
+context.rect(100+ gap/2 + width*i + gap*i,100 + gap/2 + height*j + gap*j, width, height);
+context.stroke();  
+
+    }
+}
+
+// probability = Math.round((selectchance ** randomcounter)*10000)/100;
+probability = randomcounter/25;
+
+countElem = document.getElementById("count").innerHTML = +String(randomcounter);
+probabilityElem = document.getElementById("probability").innerHTML = String(probability);
+
+
+context.strokeStyle = "#000000";
+context.lineWidth = 5.5;
+context.beginPath();
+context.arc(300,300,100,0, Math.PI*2);
+context.stroke();
+
+context.beginPath();
+context.rect(100,100,400,400);
+context.stroke();
+
+
+
+
+
+
+}
+
+// context.fillRect(100, 100, 400 , 400)
+
+recompute();
+
+function delay(milliseconds){
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
+
+async function init(){
+   
+    while(true){
+        await delay(500);
+        recompute();
+
+
+    }
+
+
+
+}
+
+init();
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

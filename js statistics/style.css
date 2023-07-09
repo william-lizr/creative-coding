@@ -1,0 +1,16 @@
+h1{margin: 0 auto;}
+h2{margin: 0 auto;}
+h4{margin: 20px auto 0;}
+
+
+
+.data  {
+width: 600px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+
+
+
+
+}
